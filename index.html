@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}OEShare — Simple. Fast. Secure Sharing.{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-badge">No sign-up required</div>
+    <h1 class="hero-title">Simple. Fast.<br><span class="accent">Secure Sharing.</span></h1>
+    <p class="hero-sub">Share files and text with anyone using a unique 6-digit code. No account needed. Content auto-deletes after 24 hours.</p>
+
+    <div class="card-grid">
+        <a href="/send/file" class="action-card">
+            <div class="card-icon">📁</div>
+            <div class="card-label">Send File</div>
+            <div class="card-desc">PDF, PPT, Excel, JPG, PNG<br>Up to 50MB</div>
+            <div class="card-arrow">→</div>
+        </a>
+        <a href="/send/text" class="action-card">
+            <div class="card-icon">📝</div>
+            <div class="card-label">Send Text</div>
+            <div class="card-desc">Notes, code snippets,<br>any plain text</div>
+            <div class="card-arrow">→</div>
+        </a>
+        <a href="/receive" class="action-card action-card--receive">
+            <div class="card-icon">📥</div>
+            <div class="card-label">Receive</div>
+            <div class="card-desc">Enter your 6-digit code<br>to get content</div>
+            <div class="card-arrow">→</div>
+        </a>
+    </div>
+
+    <div class="features">
+        <div class="feature">
+            <span class="feature-dot"></span>
+            <span>No account required</span>
+        </div>
+        <div class="feature">
+            <span class="feature-dot"></span>
+            <span>Auto-expires in 24h</span>
+        </div>
+        <div class="feature">
+            <span class="feature-dot"></span>
+            <span>50MB file limit</span>
+        </div>
+        <div class="feature">
+            <span class="feature-dot"></span>
+            <span>Instant sharing</span>
+        </div>
+    </div>
+</section>
+{% endblock %}

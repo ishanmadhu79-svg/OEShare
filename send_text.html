@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Send Text — OEShare{% endblock %}
+
+{% block content %}
+<div class="page-wrap">
+    <div class="page-header">
+        <a href="/" class="back-link">← Back</a>
+        <h2 class="page-title">Send Text</h2>
+        <p class="page-sub">Paste any text and share the code with anyone.</p>
+    </div>
+
+    {% if success %}
+    <div class="success-box">
+        <div class="success-icon">✓</div>
+        <div class="success-title">Text Shared!</div>
+        <p class="success-hint">Share this code:</p>
+        <div class="code-display">
+            <span class="code-value" id="shareCode">{{ code }}</span>
+            <button class="copy-btn" onclick="copyCode('{{ code }}')">Copy</button>
+        </div>
+        <p class="expires-note">⏱ Expires in 24 hours</p>
+        <a href="/send/text" class="btn btn-outline">Share Another</a>
+    </div>
+    {% else %}
+    <div class="card">
+        <form action="/send/text" method="POST">
+            <div class="form-group">
+                <label class="form-label" for="textInput">Your Text</label>
+                <textarea
+                    id="textInput"
+                    name="text"
+                    class="textarea"
+                    placeholder="Paste your text, code, notes, or anything here..."
+                    rows="12"
+                    oninput="updateCount(this)"
+                ></textarea>
+                <div class="char-count"><span id="charCount">0</span> / 100,000</div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">
+                Share & Generate Code
+            </button>
+        </form>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

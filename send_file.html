@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Send File — OEShare{% endblock %}
+
+{% block content %}
+<div class="page-wrap">
+    <div class="page-header">
+        <a href="/" class="back-link">← Back</a>
+        <h2 class="page-title">Send a File</h2>
+        <p class="page-sub">Upload your file and share the code with anyone.</p>
+    </div>
+
+    {% if success %}
+    <div class="success-box">
+        <div class="success-icon">✓</div>
+        <div class="success-title">File Uploaded!</div>
+        <p class="success-file">{{ filename }}</p>
+        <p class="success-hint">Share this code:</p>
+        <div class="code-display">
+            <span class="code-value" id="shareCode">{{ code }}</span>
+            <button class="copy-btn" onclick="copyCode('{{ code }}')">Copy</button>
+        </div>
+        <p class="expires-note">⏱ Expires in 24 hours</p>
+        <a href="/send/file" class="btn btn-outline">Upload Another</a>
+    </div>
+    {% else %}
+    <div class="card">
+        <form action="/send/file" method="POST" enctype="multipart/form-data" id="uploadForm">
+            <div class="drop-zone" id="dropZone">
+                <div class="drop-icon">☁</div>
+                <div class="drop-text">Drop your file here</div>
+                <div class="drop-or">or</div>
+                <label for="fileInput" class="btn btn-primary">Browse Files</label>
+                <input type="file" id="fileInput" name="file" accept=".pdf,.ppt,.pptx,.xls,.xlsx,.jpg,.jpeg,.png" style="display:none" onchange="handleFileSelect(this)">
+                <div class="drop-types">PDF · PPT · Excel · JPG · PNG &nbsp;|&nbsp; Max 50MB</div>
+            </div>
+
+            <div class="file-preview" id="filePreview" style="display:none">
+                <div class="preview-info">
+                    <span class="preview-icon" id="previewIcon">📄</span>
+                    <div>
+                        <div class="preview-name" id="previewName"></div>
+                        <div class="preview-size" id="previewSize"></div>
+                    </div>
+                    <button type="button" class="remove-btn" onclick="removeFile()">✕</button>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full" id="submitBtn" disabled>
+                Upload & Generate Code
+            </button>
+        </form>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

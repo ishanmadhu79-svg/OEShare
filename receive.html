@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Receive — OEShare{% endblock %}
+
+{% block content %}
+<div class="page-wrap">
+    <div class="page-header">
+        <a href="/" class="back-link">← Back</a>
+        <h2 class="page-title">Receive Content</h2>
+        <p class="page-sub">Enter your 6-digit code to retrieve a file or text.</p>
+    </div>
+
+    <div class="card">
+        <form action="/receive" method="POST">
+            <div class="form-group">
+                <label class="form-label" for="codeInput">Enter Code</label>
+                <div class="code-input-wrap">
+                    <input
+                        type="text"
+                        id="codeInput"
+                        name="code"
+                        class="code-input"
+                        placeholder="000000"
+                        maxlength="6"
+                        inputmode="numeric"
+                        pattern="[0-9]{6}"
+                        autocomplete="off"
+                        value="{{ request.form.get('code', '') }}"
+                        oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+                    >
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">Retrieve Content</button>
+        </form>
+    </div>
+
+    {% if error %}
+    <div class="error-box">
+        <div class="error-icon">✕</div>
+        <div class="error-title">Not Found</div>
+        <p class="error-msg">{{ error }}</p>
+    </div>
+    {% endif %}
+
+    {% if result %}
+        {% if result.type == 'file' %}
+        <div class="result-box">
+            <div class="result-header">
+                <span class="result-type-badge">File</span>
+                <span class="result-meta">Downloaded {{ result.download_count }} time{{ 's' if result.download_count != 1 else '' }}</span>
+            </div>
+            <div class="file-result">
+                <div class="file-result-icon">📄</div>
+                <div class="file-result-name">{{ result.original_name }}</div>
+            </div>
+            <a href="/download/{{ result.code }}" class="btn btn-primary btn-full">
+                ⬇ Download File
+            </a>
+        </div>
+        {% elif result.type == 'text' %}
+        <div class="result-box">
+            <div class="result-header">
+                <span class="result-type-badge result-type-badge--text">Text</span>
+                <button class="copy-btn-sm" onclick="copyText()">Copy Text</button>
+            </div>
+            <div class="text-result">
+                <pre id="textContent">{{ result.content }}</pre>
+            </div>
+        </div>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock %}
